@@ -7,7 +7,7 @@ import {
   MaxLength,
 } from 'class-validator';
 import { Maybe } from 'graphql/jsutils/Maybe';
-import { IUser, IAddUser } from './user.interfaces';
+import { IAddUser, IUser } from './user.interfaces';
 
 /**
  * Type de sortie GraphQL d'un utilisateur pour les récupérations
@@ -30,10 +30,14 @@ export class User implements IUser {
 @InputType()
 @ArgsType()
 export class AddUser implements IAddUser {
+  @IsNotEmpty({ message: "Le nom de l'utilisateur n'est pas défini" })
   @MaxLength(50)
   @Field(() => String)
   name: string;
 
+  @MaxDate(() => new Date(), {
+    message: 'La date de naissance ne peut pas être définie dans le future',
+  })
   @IsOptional()
   @Field(() => Date, { nullable: true })
   birthdate?: Date;
