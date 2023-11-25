@@ -1,13 +1,14 @@
-import { Module } from '@nestjs/common';
-import { UserService } from './user/user.service';
-import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { UserResolver } from './user/user.resolver';
+import { Module } from '@nestjs/common';
+import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserEntity } from './user/user.entity';
 import { config } from 'dotenv';
-import { EmailResolver } from './email/email.resolver';
 import { EmailEntity } from './email/email.entity';
+import { EmailResolver } from './email/email.resolver';
+import { EmailService } from './email/email.service';
+import { UserEntity } from './user/user.entity';
+import { UserResolver } from './user/user.resolver';
+import { UserService } from './user/user.service';
 
 config({});
 
@@ -29,6 +30,6 @@ config({});
       autoSchemaFile: true,
     }),
   ],
-  providers: [UserResolver, EmailResolver, UserService],
+  providers: [UserResolver, EmailResolver, UserService, EmailService],
 })
 export class AppModule {}
